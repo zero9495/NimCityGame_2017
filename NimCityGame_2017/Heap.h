@@ -4,16 +4,16 @@
 class Heap
 {
 public:
-	Heap(int count, POINT start, POINT size);
+	Heap(int &count, POINT &start, POINT &size);
 	~Heap();
 
-	void Draw(HDC hdc);
-	void Down(HDC hdc, POINT coordDown);
+	void Draw(HDC &hdc);
+	void Down(HDC &hdc, POINT &coordDown);
 	int GetCount();
 
 private:
-	BOOL IsOnRect(POINT coordDown);
-	void DrawRectangle(HDC hdc);
+	BOOL IsOnRect(POINT &coordDown);
+	void DrawRectangle(HDC &hdc);
 
 private:
 	COLORREF cBrush;
@@ -25,7 +25,7 @@ private:
 	Match** matches;
 };
 
-Heap::Heap(int count, POINT start, POINT size)
+Heap::Heap(int &count, POINT &start, POINT &size)
 {
 	cBrush = RGB(255, 255, 255);
 	cPen = RGB(0, 0, 0);
@@ -34,16 +34,17 @@ Heap::Heap(int count, POINT start, POINT size)
 	count_ = count;
 
 	POINT matchStart;
+	int indent = start_.y;
 
 	matches = new Match*[count_];
 	for (int i = 0; i < count_; i++)
 	{
 		if ((i) && (i % 7 == 0))
 		{
-			start.y += 40;
+			indent += 40;
 		}
 		matchStart.x = 5 + start.x + 20 * (i % 7);
-		matchStart.y = 5 + start.y;
+		matchStart.y = 5 + indent;
 		matches[i] = new Match(matchStart);
 	}
 }
@@ -57,7 +58,7 @@ Heap::~Heap()
 	delete []matches;
 }
 
-void Heap::Draw(HDC hdc)
+void Heap::Draw(HDC &hdc)
 {
 	HBRUSH hBrush = CreateSolidBrush(cBrush);
 	HPEN hPen = CreatePen(PS_SOLID, 1, cPen);
@@ -78,7 +79,7 @@ void Heap::Draw(HDC hdc)
 	}
 }
 
-void Heap::Down(HDC hdc, POINT coordDown)
+void Heap::Down(HDC &hdc, POINT &coordDown)
 {
 	if (this->IsOnRect(coordDown))
 	{
@@ -94,13 +95,13 @@ int Heap::GetCount()
 	return count_;
 }
 
-BOOL Heap::IsOnRect(POINT coordDown)
+BOOL Heap::IsOnRect(POINT &coordDown)
 {
 	return (start_.x < coordDown.x) && (coordDown.x < start_.x + size_.x) &&
 		(start_.y < coordDown.y) && (coordDown.y < start_.y + size_.y);
 }
 
-void Heap::DrawRectangle(HDC hdc)
+void Heap::DrawRectangle(HDC &hdc)
 {
 	Rectangle(hdc,
 		start_.x,

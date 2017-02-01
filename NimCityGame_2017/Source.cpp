@@ -2,7 +2,6 @@
 
 Задачи
 - Сделать функцию проверки попадания в кучу и в спичку (приват) виртуальной
-- Сделать во всех функциях передачу параметра по ссылке
 - Добавить класс Поле, чтобы в функции окна отсутсвовали детали реализации
 - ДОбавить конструктор копирования (и сравнения)
 - Разобраться правильно ли я удаляю массив спичек
@@ -107,12 +106,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 
 		POINT heapStart;
 		heapStart.y = start.y;
+		int count = 0;
 
 		heaps = new Heap*[5];
 		for (int i = 0; i < 5; i++)
 		{
 			heapStart.x = start.x + (heapSize.x + 10)*i;
-			heaps[i] = new Heap(17 + i,
+			count = 17 + i;
+			heaps[i] = new Heap(count,
 				heapStart,
 				heapSize);
 		}

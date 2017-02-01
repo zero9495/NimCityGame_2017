@@ -4,16 +4,16 @@
 class Match
 {
 public:
-	Match(POINT start);
+	Match(POINT &start);
 	~Match();
 
-	void Draw(HDC hdc);
-	void Down(HDC hdc, POINT coordDown);
+	void Draw(HDC &hdc);
+	void Down(HDC &hdc, POINT &coordDown);
 
 private:
 	HBRUSH GetNecessaryBrush();
-	BOOL IsOnRect(POINT coordDown);
-	void DrawRectangle(HDC hdc);
+	BOOL IsOnRect(POINT &coordDown);
+	void DrawRectangle(HDC &hdc);
 	void ChangeFlag();
 
 private:
@@ -26,7 +26,7 @@ private:
 	BOOL isDown;
 };
 
-Match::Match(POINT start)
+Match::Match(POINT &start)
 {
 	cBrushIsDown = RGB(255, 255, 255);
 	cBrushIsntDown = RGB(0, 255, 255);
@@ -41,7 +41,7 @@ Match::~Match()
 {
 }
 
-void Match::Draw(HDC hdc)
+void Match::Draw(HDC &hdc)
 {
 	HBRUSH hBrush = this->GetNecessaryBrush();	
 
@@ -58,7 +58,7 @@ void Match::Draw(HDC hdc)
 	DeleteObject(hPen);
 }
 
-void Match::Down(HDC hdc, POINT coordDown)
+void Match::Down(HDC &hdc, POINT &coordDown)
 {
 	if (this->IsOnRect(coordDown))
 	{
@@ -82,13 +82,13 @@ HBRUSH Match::GetNecessaryBrush()
 	return hBrush;
 }
 
-BOOL Match::IsOnRect(POINT coordDown)
+BOOL Match::IsOnRect(POINT &coordDown)
 {
 	return (start_.x < coordDown.x) && (coordDown.x < start_.x + size_.x) &&
 		(start_.y < coordDown.y) && (coordDown.y < start_.y + size_.y);
 }
 
-void Match::DrawRectangle(HDC hdc)
+void Match::DrawRectangle(HDC &hdc)
 {
 	Rectangle(hdc,
 		start_.x,
