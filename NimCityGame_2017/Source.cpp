@@ -1,9 +1,7 @@
 /*
 
 Задачи
-+ Заменить matchSize на size
 - Добавить виртуальную функцию проверки попадания в кучу и в спичку (приват)
-- Добавить функции выбора заливки (приват)
 - Добавить функции рисования прямоугольника (приват)
 - Добавить функциюю изменения флага нажатия (приват)
 - Добавить класс Поле, чтобы в функции окна отсутсвовали детали реализации
@@ -77,7 +75,8 @@ int APIENTRY _tWinMain(HINSTANCE This, // Дескриптор текущего приложения
 	}
 	return 0;
 }
-
+
+
 // Оконная функция вызывается операционной системой
 // и получает сообщения из очереди для данного приложения
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
@@ -118,7 +117,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 				heapSize);
 		}
 
-		hFirstBtn = CreateWindowEx(0, _T("Button"), _T("Take"), WS_VISIBLE | WS_CHILD | WS_TABSTOP,
+		hFirstBtn = CreateWindowEx(0, _T("Button"), _T("Takeee"), WS_VISIBLE | WS_CHILD | WS_TABSTOP,
 			475,
 			200,
 			50,

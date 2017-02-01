@@ -11,6 +11,9 @@ public:
 	void Down(HDC hdc, POINT coordDown);
 
 private:
+	HBRUSH GetNecessaryBrush();
+
+private:
 	COLORREF cBrushIsDown;
 	COLORREF cBrushIsntDown;
 	COLORREF cPen;
@@ -37,15 +40,7 @@ Match::~Match()
 
 void Match::Draw(HDC hdc)
 {
-	HBRUSH hBrush;
-	if (isDown)
-	{
-		hBrush = CreateSolidBrush(cBrushIsDown);
-	}
-	else
-	{
-		hBrush = CreateSolidBrush(cBrushIsntDown);
-	}
+	HBRUSH hBrush = this->GetNecessaryBrush();	
 
 	HPEN hPen = CreatePen(PS_SOLID, 1, cPen);
 	HBRUSH hBrushOld = (HBRUSH)SelectObject(hdc, hBrush);
@@ -78,4 +73,20 @@ void Match::Down(HDC hdc, POINT coordDown)
 			isDown = true;
 		}
 	}
+}
+
+HBRUSH Match::GetNecessaryBrush()
+{
+	HBRUSH hBrush;
+
+	if (isDown)
+	{
+		hBrush = CreateSolidBrush(cBrushIsDown);
+	}
+	else
+	{
+		hBrush = CreateSolidBrush(cBrushIsntDown);
+	}
+
+	return hBrush;
 }
