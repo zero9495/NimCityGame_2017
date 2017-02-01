@@ -14,6 +14,7 @@ private:
 	HBRUSH GetNecessaryBrush();
 	BOOL IsOnRect(POINT coordDown);
 	void DrawRectangle(HDC hdc);
+	void ChangeFlag();
 
 private:
 	COLORREF cBrushIsDown;
@@ -61,14 +62,7 @@ void Match::Down(HDC hdc, POINT coordDown)
 {
 	if (this->IsOnRect(coordDown))
 	{
-		if (isDown)
-		{
-			isDown = false;
-		}
-		else
-		{
-			isDown = true;
-		}
+		this->ChangeFlag();		
 	}
 }
 
@@ -101,4 +95,16 @@ void Match::DrawRectangle(HDC hdc)
 		start_.y,
 		start_.x + size_.x,
 		start_.y + size_.y);
+}
+
+void Match::ChangeFlag()
+{
+	if (isDown)
+	{
+		isDown = false;
+	}
+	else
+	{
+		isDown = true;
+	}
 }
