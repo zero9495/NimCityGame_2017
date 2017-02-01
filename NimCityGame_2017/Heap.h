@@ -12,6 +12,9 @@ public:
 	int GetCount();
 
 private:
+	BOOL IsOnRect(POINT coordDown);
+
+private:
 	COLORREF cBrush;
 	COLORREF cPen;
 	POINT start_;
@@ -80,8 +83,7 @@ void Heap::Draw(HDC hdc)
 
 void Heap::Down(HDC hdc, POINT coordDown)
 {
-	if ((start_.x < coordDown.x) && (coordDown.x < start_.x + size_.x) &&
-		(start_.y < coordDown.y) && (coordDown.y < start_.y + size_.y))
+	if (this->IsOnRect(coordDown))
 	{
 		for (int i = 0; i < count_; i++)
 		{
@@ -93,4 +95,10 @@ void Heap::Down(HDC hdc, POINT coordDown)
 int Heap::GetCount()
 {
 	return count_;
+}
+
+BOOL Heap::IsOnRect(POINT coordDown)
+{
+	return (start_.x < coordDown.x) && (coordDown.x < start_.x + size_.x) &&
+		(start_.y < coordDown.y) && (coordDown.y < start_.y + size_.y);
 }

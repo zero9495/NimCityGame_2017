@@ -12,6 +12,7 @@ public:
 
 private:
 	HBRUSH GetNecessaryBrush();
+	BOOL IsOnRect(POINT coordDown);
 
 private:
 	COLORREF cBrushIsDown;
@@ -61,8 +62,7 @@ void Match::Draw(HDC hdc)
 
 void Match::Down(HDC hdc, POINT coordDown)
 {
-	if ((start_.x < coordDown.x) && (coordDown.x < start_.x + size_.x) &&
-		(start_.y < coordDown.y) && (coordDown.y < start_.y + size_.y))
+	if (this->IsOnRect(coordDown))
 	{
 		if (isDown)
 		{
@@ -89,4 +89,10 @@ HBRUSH Match::GetNecessaryBrush()
 	}
 
 	return hBrush;
+}
+
+BOOL Match::IsOnRect(POINT coordDown)
+{
+	return (start_.x < coordDown.x) && (coordDown.x < start_.x + size_.x) &&
+		(start_.y < coordDown.y) && (coordDown.y < start_.y + size_.y);
 }
