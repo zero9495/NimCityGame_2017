@@ -13,6 +13,7 @@ public:
 private:
 	HBRUSH GetNecessaryBrush();
 	BOOL IsOnRect(POINT coordDown);
+	void DrawRectangle(HDC hdc);
 
 private:
 	COLORREF cBrushIsDown;
@@ -47,11 +48,7 @@ void Match::Draw(HDC hdc)
 	HBRUSH hBrushOld = (HBRUSH)SelectObject(hdc, hBrush);
 	HPEN hPenOld = (HPEN)SelectObject(hdc, hPen);
 
-	Rectangle(hdc,
-		start_.x,
-		start_.y,
-		start_.x + size_.x,
-		start_.y + size_.y);
+	this->DrawRectangle(hdc);	
 
 	SelectObject(hdc, hPenOld);
 	SelectObject(hdc, hBrushOld);
@@ -95,4 +92,13 @@ BOOL Match::IsOnRect(POINT coordDown)
 {
 	return (start_.x < coordDown.x) && (coordDown.x < start_.x + size_.x) &&
 		(start_.y < coordDown.y) && (coordDown.y < start_.y + size_.y);
+}
+
+void Match::DrawRectangle(HDC hdc)
+{
+	Rectangle(hdc,
+		start_.x,
+		start_.y,
+		start_.x + size_.x,
+		start_.y + size_.y);
 }

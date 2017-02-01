@@ -13,6 +13,7 @@ public:
 
 private:
 	BOOL IsOnRect(POINT coordDown);
+	void DrawRectangle(HDC hdc);
 
 private:
 	COLORREF cBrush;
@@ -63,11 +64,7 @@ void Heap::Draw(HDC hdc)
 	HBRUSH hBrushOld = (HBRUSH)SelectObject(hdc, hBrush);
 	HPEN hPenOld = (HPEN)SelectObject(hdc, hPen);
 
-	Rectangle(hdc,
-		start_.x,
-		start_.y,
-		start_.x + size_.x,
-		start_.y + size_.y);
+	this->DrawRectangle(hdc);
 
 	SelectObject(hdc, hPenOld);
 	SelectObject(hdc, hBrushOld);
@@ -101,4 +98,13 @@ BOOL Heap::IsOnRect(POINT coordDown)
 {
 	return (start_.x < coordDown.x) && (coordDown.x < start_.x + size_.x) &&
 		(start_.y < coordDown.y) && (coordDown.y < start_.y + size_.y);
+}
+
+void Heap::DrawRectangle(HDC hdc)
+{
+	Rectangle(hdc,
+		start_.x,
+		start_.y,
+		start_.x + size_.x,
+		start_.y + size_.y);
 }
