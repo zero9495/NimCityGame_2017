@@ -4,7 +4,7 @@
 class Heap
 {
 public:
-	Heap(int count, POINT start, POINT heapSize);
+	Heap(int count, POINT start, POINT size);
 	~Heap();
 
 	void Draw(HDC hdc);
@@ -15,18 +15,18 @@ private:
 	COLORREF cBrush;
 	COLORREF cPen;
 	POINT start_;
-	POINT heapSize_;
+	POINT size_;
 	int count_;
 
 	Match** matches;
 };
 
-Heap::Heap(int count, POINT start, POINT heapSize)
+Heap::Heap(int count, POINT start, POINT size)
 {
 	cBrush = RGB(255, 255, 255);
 	cPen = RGB(0, 0, 0);
 	start_ = start;
-	heapSize_ = heapSize;
+	size_ = size;
 	count_ = count;
 
 	POINT matchStart;
@@ -63,8 +63,8 @@ void Heap::Draw(HDC hdc)
 	Rectangle(hdc,
 		start_.x,
 		start_.y,
-		start_.x + heapSize_.x,
-		start_.y + heapSize_.y);
+		start_.x + size_.x,
+		start_.y + size_.y);
 
 	SelectObject(hdc, hPenOld);
 	SelectObject(hdc, hBrushOld);
@@ -80,8 +80,8 @@ void Heap::Draw(HDC hdc)
 
 void Heap::Down(HDC hdc, POINT coordDown)
 {
-	if ((start_.x < coordDown.x) && (coordDown.x < start_.x + heapSize_.x) &&
-		(start_.y < coordDown.y) && (coordDown.y < start_.y + heapSize_.y))
+	if ((start_.x < coordDown.x) && (coordDown.x < start_.x + size_.x) &&
+		(start_.y < coordDown.y) && (coordDown.y < start_.y + size_.y))
 	{
 		for (int i = 0; i < count_; i++)
 		{

@@ -15,7 +15,7 @@ private:
 	COLORREF cBrushIsntDown;
 	COLORREF cPen;
 	POINT start_;
-	POINT matchSize_;
+	POINT size_;
 
 	BOOL isDown;
 };
@@ -26,8 +26,8 @@ Match::Match(POINT start)
 	cBrushIsntDown = RGB(0, 255, 255);
 	cPen = RGB(0, 0, 0);
 	start_ = start;
-	matchSize_.x = 15;
-	matchSize_.y = 30;
+	size_.x = 15;
+	size_.y = 30;
 	isDown = false;
 }
 
@@ -54,8 +54,8 @@ void Match::Draw(HDC hdc)
 	Rectangle(hdc,
 		start_.x,
 		start_.y,
-		start_.x + matchSize_.x,
-		start_.y + matchSize_.y);
+		start_.x + size_.x,
+		start_.y + size_.y);
 
 	SelectObject(hdc, hPenOld);
 	SelectObject(hdc, hBrushOld);
@@ -66,8 +66,8 @@ void Match::Draw(HDC hdc)
 
 void Match::Down(HDC hdc, POINT coordDown)
 {
-	if ((start_.x < coordDown.x) && (coordDown.x < start_.x + matchSize_.x) &&
-		(start_.y < coordDown.y) && (coordDown.y < start_.y + matchSize_.y))
+	if ((start_.x < coordDown.x) && (coordDown.x < start_.x + size_.x) &&
+		(start_.y < coordDown.y) && (coordDown.y < start_.y + size_.y))
 	{
 		if (isDown)
 		{
