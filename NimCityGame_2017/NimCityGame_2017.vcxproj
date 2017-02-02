@@ -149,6 +149,7 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="Functions.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="Heap.h" />
     <ClInclude Include="Match.h" />

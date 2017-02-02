@@ -1,7 +1,7 @@
 #pragma once
 #include "Match.h"
 
-class Heap
+class Heap : public GameObject
 {
 public:
 	Heap(int &count, POINT &start, POINT &size);
@@ -12,14 +12,8 @@ public:
 	int GetCount();
 
 private:
-	BOOL IsOnRect(POINT &coordDown);
-	void DrawRectangle(HDC &hdc);
-
-private:
 	COLORREF cBrush;
 	COLORREF cPen;
-	POINT start_;
-	POINT size_;
 	int count_;
 
 	Match** matches;
@@ -93,19 +87,4 @@ void Heap::Down(HDC &hdc, POINT &coordDown)
 int Heap::GetCount()
 {
 	return count_;
-}
-
-BOOL Heap::IsOnRect(POINT &coordDown)
-{
-	return (start_.x < coordDown.x) && (coordDown.x < start_.x + size_.x) &&
-		(start_.y < coordDown.y) && (coordDown.y < start_.y + size_.y);
-}
-
-void Heap::DrawRectangle(HDC &hdc)
-{
-	Rectangle(hdc,
-		start_.x,
-		start_.y,
-		start_.x + size_.x,
-		start_.y + size_.y);
 }

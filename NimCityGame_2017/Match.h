@@ -1,7 +1,8 @@
 #pragma once
 #include "Header.h"
+#include "GameObject.h"
 
-class Match
+class Match : public GameObject
 {
 public:
 	Match(POINT &start);
@@ -12,16 +13,12 @@ public:
 
 private:
 	HBRUSH GetNecessaryBrush();
-	BOOL IsOnRect(POINT &coordDown);
-	void DrawRectangle(HDC &hdc);
 	void ChangeFlag();
 
 private:
 	COLORREF cBrushIsDown;
 	COLORREF cBrushIsntDown;
 	COLORREF cPen;
-	POINT start_;
-	POINT size_;
 
 	BOOL isDown;
 };
@@ -80,21 +77,6 @@ HBRUSH Match::GetNecessaryBrush()
 	}
 
 	return hBrush;
-}
-
-BOOL Match::IsOnRect(POINT &coordDown)
-{
-	return (start_.x < coordDown.x) && (coordDown.x < start_.x + size_.x) &&
-		(start_.y < coordDown.y) && (coordDown.y < start_.y + size_.y);
-}
-
-void Match::DrawRectangle(HDC &hdc)
-{
-	Rectangle(hdc,
-		start_.x,
-		start_.y,
-		start_.x + size_.x,
-		start_.y + size_.y);
 }
 
 void Match::ChangeFlag()

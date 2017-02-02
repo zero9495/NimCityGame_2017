@@ -49,7 +49,11 @@ Field::Field(HWND &hWnd, HINSTANCE &hInst)
 
 Field::~Field()
 {
-
+	for (int i = 0; i < 5; i++)
+	{
+		delete heaps[i];
+	}
+	delete[]heaps;
 }
 
 void Field::Draw(HDC &hdc)
