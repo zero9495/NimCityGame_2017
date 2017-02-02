@@ -65,18 +65,11 @@ void Match::Down(HDC &hdc, POINT &coordDown)
 
 HBRUSH Match::GetNecessaryBrush()
 {
-	HBRUSH hBrush;
-
 	if (isDown)
 	{
-		hBrush = CreateSolidBrush(cBrushIsDown);
+		return CreateSolidBrush(cBrushIsDown);
 	}
-	else
-	{
-		hBrush = CreateSolidBrush(cBrushIsntDown);
-	}
-
-	return hBrush;
+	return CreateSolidBrush(cBrushIsntDown);
 }
 
 void Match::ChangeFlag()
