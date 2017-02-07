@@ -14,24 +14,15 @@ public:
 
 private:
 	HBRUSH GetNecessaryBrush();
-	void ChangeFlag();
 
 private:
-	COLORREF cBrushIsDown;
-	COLORREF cBrushIsntDown;
-	COLORREF cPen;
-
 	BOOL isDown;
 };
 
 Match::Match(POINT &start)
 {
-	cBrushIsDown = RGB(255, 255, 255);
-	cBrushIsntDown = RGB(0, 255, 255);
-	cPen = RGB(0, 0, 0);
 	start_ = start;
-	size_.x = 15;
-	size_.y = 30;
+	size_ = &matchSize;
 	isDown = false;
 }
 
@@ -40,9 +31,6 @@ Match::~Match()
 }
 
 Match::Match(Match &match) :
-	cBrushIsDown(match.cBrushIsDown),
-	cBrushIsntDown(match.cBrushIsntDown),
-	cPen(match.cPen),
 	isDown(match.isDown)
 {
 }
@@ -51,7 +39,7 @@ void Match::Draw(HDC &hdc)
 {
 	HBRUSH hBrush = this->GetNecessaryBrush();	
 
-	HPEN hPen = CreatePen(PS_SOLID, 1, cPen);
+	HPEN hPen = CreatePen(PS_SOLID, 1, cMatchPen);
 	HBRUSH hBrushOld = (HBRUSH)SelectObject(hdc, hBrush);
 	HPEN hPenOld = (HPEN)SelectObject(hdc, hPen);
 
@@ -68,7 +56,7 @@ void Match::Down(HDC &hdc, POINT &coordDown)
 {
 	if (this->IsOnRect(coordDown))
 	{
-		this->ChangeFlag();		
+		isDown = !isDown;
 	}
 }
 
@@ -76,19 +64,7 @@ HBRUSH Match::GetNecessaryBrush()
 {
 	if (isDown)
 	{
-		return CreateSolidBrush(cBrushIsDown);
+		return CreateSolidBrush(cMatchBrushIsDown);
 	}
-	return CreateSolidBrush(cBrushIsntDown);
-}
-
-void Match::ChangeFlag()
-{
-	if (isDown)
-	{
-		isDown = false;
-	}
-	else
-	{
-		isDown = true;
-	}
+	return CreateSolidBrush(cMatchBrushIsntDown);
 }

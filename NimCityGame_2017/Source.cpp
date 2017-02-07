@@ -3,13 +3,14 @@
 Задачи
 - ДОбавить конструктор сравнения
 - Разобраться правильно ли я удаляю массив спичек
-- Вывести цвета, размеры и надписи в файл с константами
 - Попытаться не пользоваться ифами (узнать на что их заменять и зачем)
 - Добавить хеш-таблицу для хранения спичек в куче
 - Добавить хеш-функцию определения в каком ряду был нажат курсор
 - Разобраться с HINSANCE. Что это и зачем?
 - После нажатия на спичку обновлять нужный прямоугольник, а не все.
 - Сделать виртуальные функции копирования
+- Заменить i на что-то понятное
+- Выбрать типы меньше по размеру
 
 */
 
@@ -76,8 +77,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 { // Обработчик сообщений
 	PAINTSTRUCT ps;
 	HDC hdc;
-	//static String str;
-
+	
 	static POINT coordDown;
 	static Field *gameField;
 	
@@ -92,7 +92,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 	}
 	case WM_CHAR:
 	{
-		//str += (TCHAR)wParam;
 		InvalidateRect(hWnd, NULL, TRUE);
 		break;
 	}
@@ -100,7 +99,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 	{
 		hdc = BeginPaint(hWnd, &ps);
 		
-		//Echo(hdc, str);
 		gameField->Draw(hdc);
 		
 		EndPaint(hWnd, &ps);

@@ -4,7 +4,7 @@
 class Heap : public GameObject
 {
 public:
-	Heap(int &count, POINT &start, POINT &size);
+	Heap(int &count, POINT &start);
 	~Heap();
 	Heap(Heap &heap);
 
@@ -13,19 +13,14 @@ public:
 	int GetCount();
 
 private:
-	COLORREF cBrush;
-	COLORREF cPen;
 	int count_;
-
 	Match** matches;
 };
 
-Heap::Heap(int &count, POINT &start, POINT &size)
+Heap::Heap(int &count, POINT &start)
 {
-	cBrush = RGB(255, 255, 255);
-	cPen = RGB(0, 0, 0);
 	start_ = start;
-	size_ = size;
+	size_ = &heapSize;
 	count_ = count;
 
 	POINT matchStart;
@@ -34,12 +29,12 @@ Heap::Heap(int &count, POINT &start, POINT &size)
 	matches = new Match*[count_];
 	for (int i = 0; i < count_; i++)
 	{
-		if ((i) && (i % 7 == 0))
+		if ((i) && (i % amountOfMatchesInARow == 0))
 		{
-			indent += 40;
+			indent += matchSize.y + distanceBetweenMatches.y;
 		}
-		matchStart.x = 5 + start.x + 20 * (i % 7);
-		matchStart.y = 5 + indent;
+		matchStart.x = distanceBetweenMatchesAndHeap.x + start.x + distanceBetweenMatches.x * (i % amountOfMatchesInARow);
+		matchStart.y = distanceBetweenMatchesAndHeap.y + indent;
 		matches[i] = new Match(matchStart);
 	}
 }
@@ -54,8 +49,6 @@ Heap::~Heap()
 }
 
 Heap::Heap(Heap &heap) :
-	cBrush(heap.cBrush),
-	cPen(heap.cPen),
 	count_(heap.count_)
 {
 	matches = new Match*[count_];
@@ -67,8 +60,8 @@ Heap::Heap(Heap &heap) :
 
 void Heap::Draw(HDC &hdc)
 {
-	HBRUSH hBrush = CreateSolidBrush(cBrush);
-	HPEN hPen = CreatePen(PS_SOLID, 1, cPen);
+	HBRUSH hBrush = CreateSolidBrush(cHeapBrush);
+	HPEN hPen = CreatePen(PS_SOLID, 1, cHeapPen);
 	HBRUSH hBrushOld = (HBRUSH)SelectObject(hdc, hBrush);
 	HPEN hPenOld = (HPEN)SelectObject(hdc, hPen);
 

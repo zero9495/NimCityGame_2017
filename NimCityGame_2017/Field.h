@@ -12,45 +12,36 @@ public:
 	void Down(HDC &hdc, POINT &coordDown);
 
 private:
-	POINT start;
-	POINT heapSize;
 	Heap **heaps;
 	HWND hFirstBtn;
 };
 
 Field::Field(HWND &hWnd, HINSTANCE &hInst)
 {
-	heapSize.x = 150;
-	heapSize.y = 130;
-	start.x = 100;
-	start.y = 50;
-
 	POINT heapStart;
-	heapStart.y = start.y;
+	heapStart.y = fieldStart.y;
 	int count = 0;
 
-	heaps = new Heap*[5];
-	for (int i = 0; i < 5; i++)
+	heaps = new Heap*[amountOfHeaps];
+	for (int i = 0; i < amountOfHeaps; i++)
 	{
-		heapStart.x = start.x + (heapSize.x + 10)*i;
-		count = 17 + i;
+		heapStart.x = fieldStart.x + (heapSize.x + distanceBetweenHeaps.x)*i;
+		count = minAmountOfMatches + i;
 		heaps[i] = new Heap(count,
-			heapStart,
-			heapSize);
+			heapStart);
 	}
 	
-	hFirstBtn = CreateWindowEx(0, _T("Button"), _T("Takeee"), WS_VISIBLE | WS_CHILD | WS_TABSTOP,
-		475,
-		200,
-		50,
-		24,
+	hFirstBtn = CreateWindowEx(0, _T("Button"), buttonText, WS_VISIBLE | WS_CHILD | WS_TABSTOP,
+		buttonSize.left,
+		buttonSize.top,
+		buttonSize.right,
+		buttonSize.bottom,
 		hWnd, (HMENU)FIRST_BTN_ID, hInst, NULL);
-
 }
 
 Field::~Field()
 {
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < amountOfHeaps; i++)
 	{
 		delete heaps[i];
 	}
@@ -58,21 +49,18 @@ Field::~Field()
 }
 
 Field::Field(Field &field) :
-	start(field.start),
-	heapSize(field.heapSize),
 	hFirstBtn(field.hFirstBtn)
 {
-	heaps = new Heap*[5];
-	for (int i = 0; i < 5; i++)
+	heaps = new Heap*[amountOfHeaps];
+	for (int i = 0; i < amountOfHeaps; i++)
 	{
 		heaps[i] = new Heap(*field.heaps[i]);
 	}
-
 }
 
 void Field::Draw(HDC &hdc)
 {
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < amountOfHeaps; i++)
 	{
 		heaps[i]->Draw(hdc);
 	}
@@ -85,7 +73,7 @@ void Field::Draw(HDC &hdc)
 	int lenNum = 0;
 	int tempNum = 0;
 	char s[256];
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < amountOfHeaps; i++)
 	{
 	if (i)
 	{
@@ -120,7 +108,7 @@ void Field::Draw(HDC &hdc)
 
 void Field::Down(HDC &hdc, POINT &coordDown)
 {
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < amountOfHeaps; i++)
 	{
 		heaps[i]->Down(hdc, coordDown);
 	}
