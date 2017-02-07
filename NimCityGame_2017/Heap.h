@@ -6,6 +6,7 @@ class Heap : public GameObject
 public:
 	Heap(int &count, POINT &start, POINT &size);
 	~Heap();
+	Heap(Heap &heap);
 
 	void Draw(HDC &hdc);
 	void Down(HDC &hdc, POINT &coordDown);
@@ -50,6 +51,18 @@ Heap::~Heap()
 		delete matches[i];
 	}
 	delete []matches;
+}
+
+Heap::Heap(Heap &heap) :
+	cBrush(heap.cBrush),
+	cPen(heap.cPen),
+	count_(heap.count_)
+{
+	matches = new Match*[count_];
+	for (int i = 0; i < count_; i++)
+	{
+		matches[i] = new Match(*heap.matches[i]);
+	}
 }
 
 void Heap::Draw(HDC &hdc)

@@ -6,6 +6,7 @@ class Field
 public:
 	Field(HWND &hWnd, HINSTANCE &hInst);
 	~Field();
+	Field(Field &field);
 
 	void Draw(HDC &hdc);
 	void Down(HDC &hdc, POINT &coordDown);
@@ -54,6 +55,19 @@ Field::~Field()
 		delete heaps[i];
 	}
 	delete[]heaps;
+}
+
+Field::Field(Field &field) :
+	start(field.start),
+	heapSize(field.heapSize),
+	hFirstBtn(field.hFirstBtn)
+{
+	heaps = new Heap*[5];
+	for (int i = 0; i < 5; i++)
+	{
+		heaps[i] = new Heap(*field.heaps[i]);
+	}
+
 }
 
 void Field::Draw(HDC &hdc)

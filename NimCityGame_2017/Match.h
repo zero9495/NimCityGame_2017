@@ -7,6 +7,7 @@ class Match : public GameObject
 public:
 	Match(POINT &start);
 	~Match();
+	Match(Match &match);
 
 	void Draw(HDC &hdc);
 	void Down(HDC &hdc, POINT &coordDown);
@@ -35,6 +36,14 @@ Match::Match(POINT &start)
 }
 
 Match::~Match()
+{
+}
+
+Match::Match(Match &match) :
+	cBrushIsDown(match.cBrushIsDown),
+	cBrushIsntDown(match.cBrushIsntDown),
+	cPen(match.cPen),
+	isDown(match.isDown)
 {
 }
 
